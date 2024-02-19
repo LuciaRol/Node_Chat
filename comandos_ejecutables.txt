@@ -1,0 +1,17 @@
+-- Crear proyecto (sin vistas), dar que sí a todo:
+express-generator --no-view nombreproyecto
+
+-- Instalar dependencias
+npm install
+
+-- Lanzar el proyecto
+npm run start
+
+-- Instalar librería
+Ir a https://socket.io/
+npm install socket.io
+
+-- Lanzar el servidor
+npm run start
+
+-- Ir al localost/3000

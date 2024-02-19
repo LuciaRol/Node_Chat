@@ -1,0 +1,44 @@
+<html>
+
+<head>
+  <title>Express</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+
+  <!-- abre la conexión con el sevidor -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    /* conecta con la linea 29 del www.js, es un broadcast */
+    socket.on('entradaUsuario', (msg) =>{
+      console.log(msg)
+    });
+
+    function enviar(){
+      texto = document.getElementById("cajaTexto").value;
+      socket.emit('mensaje', texto);
+    }
+
+    socket.on('mensaje', (datos) =>{
+      console.log("Recibo datos: " + datos);
+    });
+
+
+  </script>
+</head>
+
+<body>
+  <h1>Mi chat</h1>
+  <p>Welcome to Lucia Chat</p>
+
+  <input type="text" id="cajaTexto">
+  <button onClick="enviar()">Enviar</button>
+
+  
+  
+
+  
+
+
+</body>
+</html>
