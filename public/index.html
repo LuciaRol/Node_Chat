@@ -1,5 +1,4 @@
 <html>
-
 <head>
   <title>Express</title>
   <link rel="stylesheet" href="/stylesheets/style.css">
@@ -15,15 +14,20 @@
     });
 
     function enviar(){
-      texto = document.getElementById("cajaTexto").value;
+      const texto = document.getElementById("cajaTexto").value;
       socket.emit('mensaje', texto);
+      mostrarMensaje("Yo: " + texto); // Mostrar el mensaje enviado por el usuario
+      document.getElementById("cajaTexto").value = ""; // Limpiar el campo de texto después de enviar el mensaje
     }
 
     socket.on('mensaje', (datos) =>{
-      console.log("Recibo datos: " + datos);
+      mostrarMensaje(datos);
     });
 
-
+    function mostrarMensaje(mensaje) {
+      const mensajesElement = document.getElementById("mensajes");
+      mensajesElement.innerHTML += "<p>" + mensaje + "</p>";
+    }
   </script>
 </head>
 
@@ -34,11 +38,6 @@
   <input type="text" id="cajaTexto">
   <button onClick="enviar()">Enviar</button>
 
-  
-  
-
-  
-
-
+  <div id="mensajes"></div>
 </body>
 </html>
