@@ -26,14 +26,15 @@
       mostrarMensaje(datos);
     });
 
+
     socket.on('nick', (msg)=>{
       socket.nick = msg;
       socket.broadcast.emit('entrada', msg + ' ha entrado al chat');
     });
 
-    // Function to send emoji when clicked
+    // enviar emoji cuando se hace click
     function enviarEmoji(emojiSrc) {
-      const emojiHTML = "<img src='" + emojiSrc + "' alt='Emoji' style='width: 30px; height: 30px'>";
+      const emojiHTML = "<img class= 'chat-img' src='" + emojiSrc + "' alt='Emoji' style='width: 30px; height: 30px'>";
       socket.emit('mensaje', emojiHTML);
       mostrarMensaje("Yo: " + emojiHTML);
     }
@@ -70,5 +71,10 @@
   .emoji img{
     width: 50px;
     height: 50px;
+  }
+
+  .chat-img{
+    width: 30px; 
+    height: 30px
   }
 </style>
