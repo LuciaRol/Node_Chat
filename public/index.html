@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>Express</title>
+  <title>Chat Lucía</title>
   <link rel="stylesheet" href="/stylesheets/style.css">
 
   <!-- abre la conexión con el sevidor -->
@@ -16,18 +16,20 @@
     function enviar(){
       const texto = document.getElementById("cajaTexto").value;
       socket.emit('mensaje', texto);
-      mostrarMensaje("Yo: " + texto); // Mostrar el mensaje enviado por el usuario
-      document.getElementById("cajaTexto").value = ""; // Limpiar el campo de texto después de enviar el mensaje
+      mostrarMensaje("Yo: " + texto); // muestra el mensaje enviado por el usuario
+      document.getElementById("cajaTexto").value = ""; // limpia el campo de texto después de enviar el mensaje
+    }
+
+    function mostrarMensaje(mensaje) {
+      const mensajesElement = document.getElementById("mensajes");
+      mensajesElement.innerHTML += "<p>" + mensaje + "</p>";
     }
 
     socket.on('mensaje', (datos) =>{
       mostrarMensaje(datos);
     });
 
-    function mostrarMensaje(mensaje) {
-      const mensajesElement = document.getElementById("mensajes");
-      mensajesElement.innerHTML += "<p>" + mensaje + "</p>";
-    }
+    
   </script>
 </head>
 

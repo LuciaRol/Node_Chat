@@ -15,3 +15,19 @@ npm install socket.io
 npm run start
 
 -- Ir al localost/3000
+
+-- Instalar paquete para no tener que el servidor se recargue solo
+(el navegador hay que seguir actualizándolo a mano)
+npm install --save-dev nodemon
+
+-- Cambiar en el package.json
+"scripts": {
+    "start": "nodemon ./bin/www"
+  },
+
+-- Lanzar el servidor como siempre.
+
+-- Crear fichero nodemon.json a mano en la raíz
+
+-- Introducir el siguiente contenido en ese fichero:
+{"ext":"html,css,js,cjs,mjs,json,pug"}
