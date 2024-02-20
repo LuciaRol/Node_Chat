@@ -2,13 +2,10 @@
 <head>
   <title>Chat Lucía</title>
   <link rel="stylesheet" href="/stylesheets/style.css">
-
-  <!-- abre la conexión con el sevidor -->
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io();
 
-    /* conecta con la linea 29 del www.js, es un broadcast */
     socket.on('entradaUsuario', (msg) =>{
       console.log(msg)
     });
@@ -16,8 +13,8 @@
     function enviar(){
       const texto = document.getElementById("cajaTexto").value;
       socket.emit('mensaje', texto);
-      mostrarMensaje("Yo: " + texto); // muestra el mensaje enviado por el usuario
-      document.getElementById("cajaTexto").value = ""; // limpia el campo de texto después de enviar el mensaje
+      mostrarMensaje("Yo: " + texto);
+      document.getElementById("cajaTexto").value = "";
     }
 
     function mostrarMensaje(mensaje) {
@@ -31,9 +28,15 @@
 
     socket.on('nick', (msg)=>{
       socket.nick = msg;
-      socket.broadcast.emit('entrada', mesg + 'ha entrado al chat');
-    })
-    
+      socket.broadcast.emit('entrada', msg + ' ha entrado al chat');
+    });
+
+    // Function to send emoji when clicked
+    function enviarEmoji(emojiSrc) {
+      const emojiHTML = "<img src='" + emojiSrc + "' alt='Emoji' style='width: 30px; height: 30px'>";
+      socket.emit('mensaje', emojiHTML);
+      mostrarMensaje("Yo: " + emojiHTML);
+    }
   </script>
 </head>
 
@@ -48,10 +51,10 @@
 
   <div>
     <ul>
-      <li class="emoji"><img src="./img/reir.png" alt=""></li>
-      <li class="emoji"><img src="./img/omg.png" alt=""></li>
-      <li class="emoji"><img src="./img/ira.png" alt=""></li>
-
+      <!-- Add event listeners to emojis -->
+      <li class="emoji" onclick="enviarEmoji('./img/reir.png')"><img src="./img/reir.png" alt="Reir"></li>
+      <li class="emoji" onclick="enviarEmoji('./img/omg.png')"><img src="./img/omg.png" alt="Omg"></li>
+      <li class="emoji" onclick="enviarEmoji('./img/ira.png')"><img src="./img/ira.png" alt="Ira"></li>
     </ul>
   </div>
 </body>
