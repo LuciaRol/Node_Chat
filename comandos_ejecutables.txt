@@ -31,3 +31,4 @@ npm install --save-dev nodemon
 
 -- Introducir el siguiente contenido en ese fichero:
 {"ext":"html,css,js,cjs,mjs,json,pug"}
+
