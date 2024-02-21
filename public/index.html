@@ -4,51 +4,58 @@
   <title>Chat Lucía</title>
   <link rel="stylesheet" href="/stylesheets/style.css">
   <script src="/socket.io/socket.io.js"></script>
-<script>
-  const socket = io();
-  let nick = ""; // Variable para almacenar el nick del usuario
+  <script>
+    const socket = io();
+    let nick = ""; // Variable para almacenar el nick del usuario
+    let avatar = ""; // Variable para almacenar el avatar del usuario
 
-  function establecerNick() {
-    nick = document.getElementById("nick").value;
-    socket.emit('nick', nick);
-    document.getElementById("nickForm").style.display = "none";
-    document.getElementById("chatForm").style.display = "block";
-  }
+    function establecerNickYAvatar() {
+      nick = document.getElementById("nick").value;
+      avatar = document.querySelector('input[name="avatar"]:checked').value;
+      socket.emit('nick', { nick: nick, avatar: avatar });
+      document.getElementById("nickForm").style.display = "none";
+      document.getElementById("chatForm").style.display = "block";
+    }
 
-  socket.on('entradaUsuario', (msg) =>{
-    console.log(msg);
-  });
+    socket.on('entradaUsuario', (msg) =>{
+      console.log(msg);
+    });
 
-  function enviar(){
-    const texto = document.getElementById("cajaTexto").value;
-    const mensaje = nick + ": " + texto; // Mensaje incluyendo el nick
-    socket.emit('mensaje', mensaje);
-    mostrarMensaje("Yo: " + texto);
-    document.getElementById("cajaTexto").value = "";
-  }
+    function enviar(){
+      const texto = document.getElementById("cajaTexto").value;
+      const mensaje = "<img src='" + avatar + "' alt='Avatar' style='width: 30px; height: 30px'> " + nick + ": " + texto; // Mensaje incluyendo el avatar y el nick
+      socket.emit('mensaje', mensaje);
+      mostrarMensaje("Yo: " + texto);
+      document.getElementById("cajaTexto").value = "";
+    }
 
-  function mostrarMensaje(mensaje) {
-    const mensajesElement = document.getElementById("mensajes");
-    mensajesElement.innerHTML += "<p>" + mensaje + "</p>";
-  }
+    function mostrarMensaje(mensaje) {
+      const mensajesElement = document.getElementById("mensajes");
+      mensajesElement.innerHTML += "<p>" + mensaje + "</p>";
+    }
 
-  socket.on('mensaje', (datos) =>{
-    mostrarMensaje(datos);
-  });
+    socket.on('mensaje', (datos) =>{
+      mostrarMensaje(datos);
+    });
 
-  socket.on('entrada', (msg)=>{
-    mostrarMensaje(msg);
-  });
+    socket.on('entrada', (msg)=>{
+      mostrarMensaje(msg);
+    });
 
-  // enviar emoji cuando se hace click
-  function enviarEmoji(emojiSrc) {
-    const emojiHTML = "<img class= 'chat-img' src='" + emojiSrc + "' alt='Emoji' style='width: 30px; height: 30px'>";
-    const mensaje = nick + ": " + emojiHTML; // Mensaje incluyendo el nick y el emoji
-    socket.emit('mensaje', mensaje);
-    mostrarMensaje("Yo: " + emojiHTML);
-  }
-</script>
+    // enviar emoji cuando se hace click
+    function enviarEmoji(emojiSrc) {
+      const emojiHTML = "<img class= 'chat-img' src='" + emojiSrc + "' alt='Emoji' style='width: 30px; height: 30px'>";
+      const mensaje = "<img src='" + avatar + "' alt='Avatar' style='width: 30px; height: 30px'> " + nick + ": " + emojiHTML; // Mensaje incluyendo el avatar, el nick y el emoji
+      socket.emit('mensaje', mensaje);
+      mostrarMensaje("Yo: " + emojiHTML);
+    }
 
+    // Mostrar avatar mientras se escribe
+    function mostrarAvatar() {
+      const avatarPreview = document.getElementById("avatarPreview");
+      avatarPreview.innerHTML = "<img src='" + avatar + "' alt='Avatar' style='width: 30px; height: 30px'>";
+    }
+  </script>
 </head>
 
 <body>
@@ -56,11 +63,19 @@
   <div id="nickForm">
     <p>Por favor, introduce tu nick:</p>
     <input type="text" id="nick">
-    <button onClick="establecerNick()">Enviar</button>
+    <p>Selecciona un avatar:</p>
+    <input type="radio" id="avatar1" name="avatar" value="./img/av1.png" checked>
+    <label for="avatar1"><img src="./img/av1.png" alt="Avatar 1" style="width: 30px; height: 30px;"></label>
+    <input type="radio" id="avatar2" name="avatar" value="./img/av2.png">
+    <label for="avatar2"><img src="./img/av2.png" alt="Avatar 2" style="width: 30px; height: 30px;"></label>
+    <input type="radio" id="avatar3" name="avatar" value="./img/av3.png">
+    <label for="avatar3"><img src="./img/av3.png" alt="Avatar 3" style="width: 30px; height: 30px;"></label>
+    <button onClick="establecerNickYAvatar()">Enviar</button>
   </div>
 
   <div id="chatForm" style="display: none;">
-    <input type="text" id="cajaTexto">
+    <input type="text" id="cajaTexto" onInput="mostrarAvatar()">
+    <div id="avatarPreview"></div>
     <button onClick="enviar()">Enviar</button>
 
     <div id="mensajes"></div>
@@ -91,6 +106,6 @@
 
   .chat-img{
     width: 30px; 
-    height: 30px
+    height: 30px;
   }
 </style>
