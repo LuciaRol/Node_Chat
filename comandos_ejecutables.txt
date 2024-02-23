@@ -32,3 +32,6 @@ npm install --save-dev nodemon
 -- Introducir el siguiente contenido en ese fichero:
 {"ext":"html,css,js,cjs,mjs,json,pug"}
 
+
+-- Para subir ficheros, hay que instalar la siguiente librería:
+npm i express-fileupload

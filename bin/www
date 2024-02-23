@@ -20,14 +20,14 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-const io = new Server(server); // desde 23-39 es lo que hemos metido
+const io = new Server(server); // desde 23-40 es lo que hemos metido
 
 let usuariosConectados = 0;
 // conecta un usuario concreto al servidor
 io.on('connection', (socket) => {
   usuariosConectados++;
   console.log('Hay conectados ' + usuariosConectados + ' usuarios');
-
+  // desconecta un usuario del servidor
   io.emit('entradaUsuario', 'Numero de usuarios: ' + usuariosConectados);
   socket.on('disconnect', ()=>{
     usuariosConectados--;
