@@ -1,4 +1,11 @@
 <!-- Cliente para subir archivos sin recargar la pagina -->
+<!-- en el servidor se puede hacer un broadcast y generar un json para compartir los
+ficheros entre usuarios
+ejemplo: 
+socket.emit('compImagen', ___)
+    {
+        (json)
+    } -->
 <html>
   <head>
     <title>File Upload with Fetch API</title>
@@ -22,11 +29,11 @@
         })
         .then(data => {
           console.log(data);
-          alert('File uploaded successfully!');
+          alert('Fichero subido correctamente!');
         })
         .catch(error => {
           console.error(error);
-          alert('Error uploading file');
+          alert('Error al subir el fichero');
         });
       });
     </script>
