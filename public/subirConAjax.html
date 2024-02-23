@@ -1,0 +1,34 @@
+<!-- Cliente para subir archivos sin recargar la pagina -->
+<html>
+  <head>
+    <title>File Upload with Fetch API</title>
+  </head>
+  <body>
+    <form>
+      <input type="file" id="fileInput" name="fileInput">
+      <button type="button" id="uploadButton">Upload</button>
+    </form>
+    <script>
+      const uploadButton = document.getElementById('uploadButton');
+      const fileInput = document.getElementById('fileInput');
+      const endpoint = 'http://localhost:3000/upload';
+      uploadButton.addEventListener('click', () => {
+        const file = fileInput.files[0];
+        const formData = new FormData();
+        formData.append('sampleFile', file);
+        fetch(endpoint, {
+          method: 'POST',
+          body: formData
+        })
+        .then(data => {
+          console.log(data);
+          alert('File uploaded successfully!');
+        })
+        .catch(error => {
+          console.error(error);
+          alert('Error uploading file');
+        });
+      });
+    </script>
+  </body>
+</html>

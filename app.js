@@ -35,7 +35,7 @@ app.post('/upload', function(req, res) {
     // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
     sampleFile = req.files.sampleFile;
     // aquí se pone la ruta del archivo en el que se van a guardar los ficheros subidos
-    // Date.now sirve para añadir la fecha a los ficheros subidos y hace que no se sobreescriban si los vuelvo a subir
+    // Date.now sirve para añadir la fecha al nombre de los ficheros subidos y hace que no se sobreescriban si los vuelvo a subir
     uploadPath = __dirname + '/public/subir/' + Date.now() + '_' + sampleFile.name;
   
     // Use the mv() method to place the file somewhere on your server
