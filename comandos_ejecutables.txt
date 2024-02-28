@@ -16,7 +16,7 @@ npm run start
 
 -- Ir al localost/3000
 
--- Instalar paquete para no tener que el servidor se recargue solo
+-- Instalar paquete para que el servidor se recargue solo
 (el navegador hay que seguir actualizándolo a mano)
 npm install --save-dev nodemon
 

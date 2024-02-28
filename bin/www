@@ -38,6 +38,23 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('mensaje', msg)
   });
 
+  // rooms: agrupa los sockets
+  socket.on('entrarChat', (chat)=>{
+    socket.join(chat);
+    io.to(chat).emit('connectToRoom', 'Bienvenido a la sala');
+  });
+
+  socket.on('mensajeEnSala', (datos)=>{
+    datos = {
+      sala: "nombreSala",
+      nick: "miNick",
+      msg: "mensaje"
+    }
+    socket.to(datos.sala).emit("mensajeEnSala", datos)
+  });
+
+
+
 });
 
 /**
